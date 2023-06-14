@@ -1,0 +1,67 @@
+<div class="container mt-4">
+    <h2>Videojuegos</h2>
+  
+    <!-- Formulario para crear/editar un item -->
+    <form [formGroup]="videojuegoForm" (ngSubmit)="videojuegoForm.valid ? (currentItem._id ? updateItem(currentItem._id, videojuegoForm.value) : createItem(videojuegoForm.value)) : null">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" class="form-control" formControlName="name" required>
+          <div *ngIf="videojuegoForm.get('name')?.invalid && videojuegoForm.get('name')?.touched">
+            <small class="text-danger">Name is required.</small>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <input type="text" class="form-control" formControlName="description" required>
+          <div *ngIf="videojuegoForm.get('description')?.invalid && videojuegoForm.get('description')?.touched">
+            <small class="text-danger">Description is required.</small>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="valoracion">Valoracion:</label>
+          <input type="number" class="form-control" formControlName="valoracion" required>
+          <div *ngIf="videojuegoForm.get('valoracion')?.invalid && videojuegoForm.get('valoracion')?.touched">
+            <small class="text-danger">Valoracion is required.</small>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="genero">Genero:</label>
+          <input type="text" class="form-control" formControlName="genero" required>
+          <div *ngIf="videojuegoForm.get('genero')?.invalid && videojuegoForm.get('genero')?.touched">
+            <small class="text-danger">Genero is required and should contain only letters.</small>
+          </div>
+        </div>
+      
+        <button type="submit" class="btn btn-primary" [disabled]="!videojuegoForm.valid && !currentItem._id">Add</button>
+      </form>
+  
+    <hr>
+  
+    <!-- Lista de items -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripcion</th>
+          <th>Valoracion</th>
+          <th>Genero</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let videojuego of videojuegos">
+          <td>{{ videojuego.name }}</td>
+          <td>{{ videojuego.description }}</td>
+          <td>{{ videojuego.valoracion }}</td>
+          <td>{{ videojuego.genero }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" (click)="editItem(videojuego._id)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteItem(videojuego._id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
